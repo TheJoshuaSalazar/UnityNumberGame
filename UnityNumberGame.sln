@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{F4A314AD-9AF3-3866-521B-9E7509DFE812}") = "UnityNumberGame", "Assembly-CSharp.csproj", "{A8D33DA6-6B9D-6A80-A1B4-6075E4495F2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8D33DA6-6B9D-6A80-A1B4-6075E4495F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D33DA6-6B9D-6A80-A1B4-6075E4495F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D33DA6-6B9D-6A80-A1B4-6075E4495F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D33DA6-6B9D-6A80-A1B4-6075E4495F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

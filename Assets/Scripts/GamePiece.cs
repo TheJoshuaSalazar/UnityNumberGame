@@ -6,6 +6,8 @@ public class GamePiece : MonoBehaviour
 {
 	public Text NumberText;
 	public int Value;
+	public GamePiece ClockwisePiece;
+	public GamePiece CounterClockwisePiece;
 
 	public delegate void ClickAction(GamePiece gamePiece);
 	public event ClickAction OnClicked;
@@ -16,7 +18,7 @@ public class GamePiece : MonoBehaviour
 		TextUpdate ();
 	}
 
-	private void TextUpdate()
+	public void TextUpdate()
 	{
 		NumberText.text = Value.ToString();
 	}

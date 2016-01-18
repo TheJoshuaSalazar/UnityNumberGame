@@ -6,13 +6,9 @@ public class GameManager : MonoBehaviour
 {
 	public GamePiece[] GamePieces;
 	public TextManager TextManager;
+	public Button RestartButton;
 
 	private int totalScore;
-	private int lowEndNumber = 0;
-	private int highEndNumber = 0;
-	private int lowNumberOffset = 1;
-	private int highNumberOffset = 10;
-
 	private bool canClick = true;
 	private bool clockWise = true;
 	private bool greaterThan = true;
@@ -22,20 +18,30 @@ public class GameManager : MonoBehaviour
 	{
 		StartGame ();
 		AddClickEventsToPieces ();
+		RestartButton.gameObject.SetActive (false);
 	}
 
+	/// <summary>
+	/// Adds the starting values to the cubes
+	/// and sets up everything
+	/// </summary>
 	private void StartGame()
 	{
 		foreach (var gamePiece in GamePieces) 
 		{
 			int value = Random.Range(1, 11);
 			gamePiece.Value = value;
+			gamePiece.TextUpdate ();
 		}
 
-		FindLowAndHigh ();
 		AddTotalScore ();
+		TextManager.UpdateDirection (ref clockWise);
 	}
 
+	/// <summary>
+	/// Adds the total score
+	/// </summary>
+	/// <returns>The total score</returns>
 	private int AddTotalScore ()
 	{
 		totalScore = 0;
@@ -48,41 +54,29 @@ public class GameManager : MonoBehaviour
 		return totalScore;
 	}
 
-	private void FindLowAndHigh()
-	{
-		lowEndNumber = GamePieces [0].Value;
-		foreach (var gamePiece in GamePieces)
-		{
-			if(gamePiece.Value < lowEndNumber)
-				lowEndNumber = gamePiece.Value;
-
-			if(highEndNumber < gamePiece.Value)
-				highEndNumber = gamePiece.Value;
-		}
-
-		TextManager.SetNextNumberText (lowEndNumber, highEndNumber, highNumberOffset);
-	}
-
 	private void Clicked(GamePiece gamePiece)
 	{
 		if (canClick) 
 		{
-			gamePiece.Value = Random.Range (lowEndNumber + lowNumberOffset, highEndNumber + highNumberOffset);
+			var additionPiece = (clockWise ? gamePiece.CounterClockwisePiece : gamePiece.ClockwisePiece);
+			gamePiece.Value += additionPiece.Value;
 			SetUpNextRound (gamePiece);
 
+			//Debug.Log (clockWise + " " + additionPiece.Value);
 
 			if(canClick)
 			{
-				FindLowAndHigh ();
 				AddTotalScore ();
-				TextManager.SetNextNumberText (lowEndNumber, highEndNumber, highNumberOffset);
-				TextManager.UpdateDirection (clockWise);
+				TextManager.UpdateDirection (ref clockWise);
 				TextManager.UpdateOperation (greaterThan);
 			}
 			else
 			{
 				RemoveClickEventsToPieces ();
 				TextManager.GameOver();
+
+				RestartButton.gameObject.SetActive (true);
+				RestartButton.onClick.AddListener(delegate { RestartGameEvent(); });
 			}
 		}
 	}
@@ -152,5 +146,18 @@ public class GameManager : MonoBehaviour
 		{
 			gamePiece.OnClicked -= Clicked;
 		}
+	}
+
+	/// <summary>
+	/// Restarts the game scene
+	/// </summary>
+	private void RestartGameEvent()
+	{
+		StartGame ();
+		TextManager.Restart ();
+		AddClickEventsToPieces ();
+		RestartButton.gameObject.SetActive (false);
+
+		canClick = true;
 	}
 }

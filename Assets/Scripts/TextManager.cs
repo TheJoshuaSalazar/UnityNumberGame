@@ -5,7 +5,6 @@ using System.Collections;
 public class TextManager : MonoBehaviour 
 {
 	public Text TotalScoreText;
-	public Text NextNumberText;
 	public Text DirectionText;
 	public Text OperationText;
 	public Text GameOverText;
@@ -14,18 +13,18 @@ public class TextManager : MonoBehaviour
 	{
 		TotalScoreText.text = "Score: " + totalScore;
 	}
-	
-	public void SetNextNumberText(int lowEndNumber, int highEndNumber, int highNumberOffset)
-	{
-		NextNumberText.text = "Between " + lowEndNumber + " and " + (highEndNumber + highNumberOffset);
-	}
 
 	public void GameOver()
 	{
 		GameOverText.text = "Game Over";
 	}
+
+	public void Restart()
+	{
+		GameOverText.text = "";
+	}
 	
-	public void UpdateDirection(bool clockWise)
+	public void UpdateDirection(ref bool clockWise)
 	{
 		int trueOrFalse = Random.Range (0, 2);
 		if (trueOrFalse == 1) 
